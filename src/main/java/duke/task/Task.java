@@ -1,5 +1,4 @@
 package duke.task;
-import duke.DukeException;
 import duke.Ui;
 
 /**
@@ -15,12 +14,8 @@ public class Task {
      *
      * @param description Task description.
      */
-    public Task(String description) throws DukeException {
-        if (description.equals("") || description.equals(" ")) {
-            throw new DukeException("☹ OOPS!!! The description of an event cannot be empty.");
-        } else {
-            this.description = description.substring(1);
-        }
+    public Task(String description) {
+        this.description = description;
         this.isDone = false;
     }
 

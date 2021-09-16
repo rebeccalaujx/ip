@@ -12,6 +12,7 @@ import duke.DukeException;
 public class Event extends Task {
 
     protected String at;
+    protected String date = "";
 
     /**
      * Constructor for Event.
@@ -23,15 +24,23 @@ public class Event extends Task {
     public Event(String description, String at) throws DukeException {
         super(description);
 
-        if (at.equals("") || at.equals(" ")) {
+        try {
+            LocalDate localDate = LocalDate.parse(at);
+            this.date = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+        } catch (DateTimeParseException e) {
+            throw new DukeException("duke.task.Event date should be in a yyyy-mm-dd format.");
+        }
+
+        if (description.isEmpty() || description == "" || description == " ") {
+            throw new DukeException("☹ OOPS!!! The description of an event cannot be empty.");
+        } else {
+            this.description = description;
+        }
+
+        if (at.isEmpty() || at == "" || at == " ") {
             throw new DukeException("☹ OOPS!!! The time of the event must be indicated.");
         } else {
-            try {
-                LocalDate localDate = LocalDate.parse(at);
-                this.at = localDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-            } catch (DateTimeParseException e) {
-                throw new DukeException("duke.task.Event date should be in a yyyy-mm-dd format.");
-            }
+            this.at = this.date;
         }
     }
 

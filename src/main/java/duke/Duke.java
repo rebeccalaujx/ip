@@ -28,10 +28,10 @@ public class Duke {
             System.out.println(storage.load());
             tasks = storage.load();
         } catch (DukeException e) {
-            ui.getErrorMessage(e);
+            ui.showError(e.getMessage());
             tasks = new TaskList();
         } catch (IOException e) {
-            ui.getErrorMessage(e);
+            ui.showError(e.getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ public class Duke {
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {
-                ui.getErrorMessage(e);
+                ui.showError(e.getMessage());
             }
         }
         scanner.close();
@@ -73,7 +73,8 @@ public class Duke {
             Command c = Parser.parse(input);
             return c.execute(tasks, ui, storage);
         } catch (DukeException e) {
-            return ui.getErrorMessage(e);
+            //not OOP!
+            return e.getMessage();
         }
     }
 
